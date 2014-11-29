@@ -42,13 +42,15 @@ public class GUI extends GUIState {
 	
 	public void setupPortrayals() {
 		PG pg = (PG) state;
-		
+		System.out.println("Working Directory = " + System.getProperty("user.dir"));
+		 
 		// tell the portrayals what to portray and how to portray them
+		// http://cs.gmu.edu/~eclab/projects/mason/docs/howto.html#display2d
 		agentsPortrayal.setField(pg.world);
-		ImageIcon euroasia = new ImageIcon("euroasia.gif");
+		ImageIcon eurasia = new ImageIcon("eurasia.gif");
 		int dimension = (int)Math.min(pg.world.getWidth(),pg.world.getHeight());
-		agentsPortrayal.setPortrayalForAll(new ImagePortrayal2D(euroasia, dimension));
-		display.attach(agentsPortrayal, "Euroasia");
+		agentsPortrayal.setPortrayalForAll(new ImagePortrayal2D(eurasia, dimension));
+		display.attach(agentsPortrayal, "Eurasia");
 		
 		Bag agents = pg.world.getAllObjects();
 		for (Object a : agents) {
