@@ -20,6 +20,7 @@ import sim.portrayal.continuous.ContinuousPortrayal2D;
 import sim.portrayal.grid.SparseGridPortrayal2D;
 import sim.portrayal.simple.ImagePortrayal2D;
 import sim.util.Bag;
+import sim.util.Int2D;
 
 public class GUI extends GUIState {
 
@@ -66,7 +67,7 @@ public class GUI extends GUIState {
 //		display.setBackdrop(null);
 		
 		// Scale-Independent
-		Image i = new ImageIcon("eurasia.gif").getImage();
+		Image i = new ImageIcon("eurasia.png").getImage();
 		BufferedImage b = display.getGraphicsConfiguration().createCompatibleImage(i.getWidth(null), i.getHeight(null));
 		Graphics g = b.getGraphics();
 		g.drawImage(i,0,0,i.getWidth(null),i.getHeight(null),null);
@@ -74,10 +75,21 @@ public class GUI extends GUIState {
 		display.setBackdrop(new TexturePaint(b, new Rectangle(0,0,i.getWidth(null),i.getHeight(null))));
 		
 		Bag agents = pg.world.getAllObjects();
+		
 		for (Object a : agents) {
+			// get the land color
+			Int2D loc = pg.world.getObjectLocation((Agent) a);
+			int c = b.getRGB(loc.x*PG.SPARSE_RATE, loc.y*PG.SPARSE_RATE);
+			int  re = (c & 0x00ff0000) >> 16;
+			int  gr = (c & 0x0000ff00) >> 8;
+			int  bl = c & 0x000000ff;
+			Color landColor = new Color(re,gr,bl);
+			System.out.println(landColor.toString());
+			
+			// set the agent color
 			float red = (float)1.0;                              
-            float green = (float)0.0;
-            float blue = (float)0.0;
+            float green = (float)1.0;
+            float blue = (float)1.0;
             float alpha = (float)1.0;
             agentsPortrayal.setPortrayalForObject ((Agent)a, new sim.portrayal.simple.OvalPortrayal2D (new Color(red,green,blue,alpha)));
 		}
@@ -89,7 +101,8 @@ public class GUI extends GUIState {
 	
 	public void init(Controller c) {
 		super.init(c);
-		display = new Display2D(516,486,this);
+		Image i = new ImageIcon("eurasia.png").getImage();
+		display = new Display2D(i.getWidth(null),i.getHeight(null),this);
 		display.setClipping(false);
 		displayFrame = display.createFrame();
 		displayFrame.setTitle("PG-ABM");
