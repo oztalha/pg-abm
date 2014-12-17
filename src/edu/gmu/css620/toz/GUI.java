@@ -84,14 +84,19 @@ public class GUI extends GUIState {
 			int  gr = (c & 0x0000ff00) >> 8;
 			int  bl = c & 0x000000ff;
 			Color landColor = new Color(re,gr,bl);
-			System.out.println(landColor.toString());
+			if(landColor.getRed() > 250 && landColor.getGreen() > 250 && landColor.getBlue() < 150)
+				System.out.println(loc.y);
+				//System.out.println(landColor.toString());
 			
 			// set the agent color
 			float red = (float)1.0;                              
             float green = (float)1.0;
             float blue = (float)1.0;
             float alpha = (float)1.0;
-            agentsPortrayal.setPortrayalForObject ((Agent)a, new sim.portrayal.simple.OvalPortrayal2D (new Color(red,green,blue,alpha)));
+            if(landColor.getRed() > 250 && landColor.getGreen() > 250 && landColor.getBlue() < 150 && loc.y<90 && loc.x<50)
+            	agentsPortrayal.setPortrayalForObject ((Agent)a, new sim.portrayal.simple.OvalPortrayal2D (new Color(0,0,1,alpha)));
+            else
+            	agentsPortrayal.setPortrayalForObject ((Agent)a, new sim.portrayal.simple.OvalPortrayal2D (new Color(red,green,blue,alpha)));
 		}
 		
 		// reschedule the displayer

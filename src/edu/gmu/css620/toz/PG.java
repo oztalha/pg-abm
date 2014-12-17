@@ -13,7 +13,7 @@ public class PG extends SimState {
 	public static final int SPARSE_RATE = 4;
 	public int gridWidth = 516/SPARSE_RATE; // width of the space
 	public int gridHeight = 460/SPARSE_RATE; // height of the space
-	public int n = 100; //number of agents
+	public int n = 1000; //number of agents
 	
 	public PG(long seed) {super(seed);}
 	public void start() {
